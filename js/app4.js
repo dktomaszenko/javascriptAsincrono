@@ -45,3 +45,20 @@ p.then(
 // nunca llegaremos a esta linea.
     }
 );
+
+//----------------------------------------------------------------------
+/*vaya lio, como podemos resolver la promesa y devolver que ha sido rechazada*/
+
+/*Powinno być teraz jasne, że resolve(..) to odpowiednia nazwa dla pierwszego parametru (wywołania
+zwrotnego) konstruktora Promise(..).*/
+
+var rejectedPr = new Promise( function(resolve,reject){
+    resolve( Promise.reject( "Ups!" ) );
+} );
+rejectedPr.then(
+    function fulfilled(){
+    },
+    function rejected(err){
+        console.log( err ); // "Ups!"
+    }
+);
