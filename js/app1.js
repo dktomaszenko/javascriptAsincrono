@@ -1,15 +1,15 @@
 function addNumbers(x, y) {
-// Upewniamy się, że dane wejściowe są liczbami.
+// Nos aseguremos que los datos de entrado son números
     if (typeof x !== "number" || typeof y !== "number") {
-        throw Error("Nieprawidłowe parametry.");
+        throw Error("Datos erroneos.");
     }
 }
 
 function addNumbersB(x, y) {
-// Upewniamy się, że dane wejściowe są liczbami.
+// Nos aseguremos que los datos de entrado son números , ver. 2
     x = Number(x);
     y = Number(y);
-// Operator + bezpiecznie przeprowadzi dodawanie wartości liczbowych.
+// Operador + sumara de forma segura
     return x + y;
 }
 addNumbers(21, 21); // 42
