@@ -92,7 +92,77 @@ catch (err) {
 }
 
 /*
-nieprzechwycony
-błąd
-na
-zewnątrz: F*/
+ nieprzechwycony
+ błąd
+ na
+ zewnątrz: F*/
+
+
+//------------------------------------------------------------------------
+
+
+// Wywołanie request(..) to oparta na obietnicach funkcja pomocnicza wykonująca żądania Ajax.
+var res = [];
+function *reqData(url) {
+    var data = yield request(url);
+// Przekazanie kontroli.
+    yield;
+    res.push(data);
+}
+var it1 = reqData("http://dowolny.adres.url.1");
+var it2 = reqData("http://dowolny.adres.url.2");
+var p1 = it1.next();
+var p2 = it2.next();
+p1.then(function (data) {
+    it1.next(data);
+});
+p2.then(function (data) {
+    it2.next(data);
+});
+Promise.all([p1, p2])
+    .then(function () {
+        it1.next();
+        it2.next();
+    });
+
+//----------------------------------------------
+
+// Wywołanie request(..) to oparta na obietnicach funkcja pomocnicza wykonująca żądania Ajax.
+var res = [];
+runAll(
+    function*() {
+        var p1 = request("http://dowolny.adres.url.1");
+// Przekazanie kontroli.
+        yield;
+        res.push(yield p1);
+    },
+    function*() {
+        var p2 = request("http://dowolny.adres.url.2");
+// Przekazanie kontroli.
+        yield;
+        res.push(yield p2);
+    }
+);
+
+///   VER 2
+
+// Wywołanie request(..) to oparta na obietnicach funkcja pomocnicza wykonująca żądania Ajax.
+runAll(
+    function*(data) {
+        data.res = [];
+// Przekazanie kontroli (oraz komunikatu).
+        var url1 = yield "http://dowolny.adres.url.2";
+        var p1 = request(url1); // "http://dowolny.adres.url.1"
+// Przekazanie kontroli.
+        yield;
+        data.res.push(yield p1);
+    },
+    function*(data) {
+// Przekazanie kontroli (oraz komunikatu).
+        var url2 = yield "http://dowolny.adres.url.1";
+        var p2 = request(url2); // "http://dowolny.adres.url.2"
+// Przekazanie kontroli.
+        yield;
+        data.res.push(yield p2);
+    }
+);
