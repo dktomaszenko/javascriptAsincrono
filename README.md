@@ -11,7 +11,7 @@
             dokładnie po kroku 2. Co w sytuacji, gdy chcemy, aby co najmniej dwa kroki były wykonywane
             jednocześnie (czyli „współbieżnie”)?
         
-####Warianty wywołań all([ .. ]) i race([ .. ])
+> Warianty wywołań all([ .. ]) i race([ .. ])
         
         
             Wprawdzie w specyfikacji ES6 rodzime obietnice są dostarczane wraz z wbudowanymi wywołaniami
